@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主题色 -->
+    <color name="primary">#0EA5E9</color>
+    <color name="primary_dark">#0284C7</color>
+    <color name="primary_light">#E0F2FE</color>
+
+    <!-- 背景色 -->
+    <color name="background">#F0F9FF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8FAFC</color>
+
+    <!-- 文字色 -->
+    <color name="on_surface">#0F172A</color>
+    <color name="on_surface_variant">#475569</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- 各模式强调色 -->
+    <color name="mode_fridge">#3B82F6</color>
+    <color name="mode_fridge_bg">#EFF6FF</color>
+    <color name="mode_detect">#8B5CF6</color>
+    <color name="mode_detect_bg">#F5F3FF</color>
+    <color name="mode_storage">#F59E0B</color>
+    <color name="mode_storage_bg">#FFFBEB</color>
+    <color name="mode_health">#EF4444</color>
+    <color name="mode_health_bg">#FEF2F2</color>
+
+    <!-- 状态色 -->
+    <color name="success">#10B981</color>
+    <color name="error">#EF4444</color>
+    <color name="warning">#F59E0B</color>
+    <color name="info">#3B82F6</color>
+</resources>

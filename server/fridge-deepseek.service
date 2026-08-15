@@ -1,0 +1,17 @@
+[Unit]
+Description=Fridge RA6M5 W800 DeepSeek TCP bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/fridge-deepseek
+EnvironmentFile=/etc/fridge-deepseek.env
+ExecStart=/opt/fridge-deepseek/.venv/bin/python /opt/fridge-deepseek/fridge_deepseek_server.py
+Restart=always
+RestartSec=3
+User=fridge
+Group=fridge
+
+[Install]
+WantedBy=multi-user.target

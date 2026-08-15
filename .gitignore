@@ -1,0 +1,57 @@
+﻿# Existing Git metadata backups
+.git-invalid-backup/
+.git-backup/
+
+# Codex/local tools
+.agents/
+.tools/
+tmp/
+
+# Third-party materials and datasets
+DShanMCU-RA6M5配套学习资料/
+音频训练数据/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Archives and installers
+*.zip
+*.7z
+*.rar
+*.exe
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Android/Gradle
+.gradle/
+.idea/
+build/
+local.properties
+*.apk
+*.aab
+
+# Node
+node_modules/
+
+# Firmware build outputs
+Fridge/project_firdge/Debug/
+Fridge/project_firdge/Release/
+Fridge/project_firdge/.metadata/
+Fridge/project_firdge_boot/Debug/
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini

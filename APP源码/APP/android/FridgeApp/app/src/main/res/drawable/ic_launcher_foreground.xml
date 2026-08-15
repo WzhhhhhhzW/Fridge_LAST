@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- 圆角药盒 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,38h48v38c0,4.4 -3.6,8 -8,8H38c-4.4,0 -8,-3.6 -8,-8V38z"/>
+    <!-- 药盒盖子 -->
+    <path
+        android:fillColor="#BAE6FD"
+        android:pathData="M28,32h52c2.2,0 4,1.8 4,4v4H24v-4c0,-2.2 1.8,-4 4,-4z"/>
+    <!-- 十字 -->
+    <path
+        android:fillColor="#0284C7"
+        android:pathData="M50,42v8h-8v8h8v8h8v-8h8v-8h-8v-8h-8z"/>
+</vector>

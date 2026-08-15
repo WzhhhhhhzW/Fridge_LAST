@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>智慧药品冷藏系统 · 云端控制台</title>
+  <link rel="stylesheet" href="/dashboard.css?v=20260717-2">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div id="offlineBanner" class="offline-banner" hidden>云端数据暂时中断，正在自动重连</div>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">F</span><span><b>FRIDGE CLOUD</b><small>智慧药品冷藏系统</small></span></a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="/" data-route="overview">系统总览</a>
+      <a href="/monitor" data-route="monitor">实时监控</a>
+      <a href="/inventory" data-route="inventory">智慧仓储</a>
+      <a href="/firmware" data-route="firmware">固件中心</a>
+    </nav>
+    <div class="top-actions"><span id="deviceBadge" class="status-pill offline"><i></i>主设备离线</span><a class="admin-entry" href="/admin">管理员模式</a><time id="clock">--:--:--</time></div>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <div><span class="eyebrow">HUAWEI CLOUD · RA6M5 · DEEPSEEK</span><h1 id="pageTitle">智慧冷藏云端控制台</h1><p id="pageSubtitle">端、云、AI与药品仓储的实时数字化视图</p></div>
+      <div class="sync-state"><span class="pulse"></span><div><b>实时遥测</b><small id="lastRefresh">等待首次同步</small></div></div>
+    </section>
+
+    <section class="route-page" data-page="overview">
+      <div class="kpi-grid">
+        <article class="kpi"><span class="kpi-icon">端</span><div><small>手机客户端</small><strong><b id="kpiClientsOnline">0</b><em> 在线</em></strong><span id="kpiClientsTotal">已登记 0 台</span></div></article>
+        <article class="kpi"><span class="kpi-icon">温</span><div><small>当前 / 设定温度</small><strong><b id="kpiCurrentTemp">--</b><em> / </em><b id="kpiSetTemp">--</b><em>℃</em></strong><span id="kpiLastSeen">等待心跳</span></div></article>
+        <article class="kpi"><span class="kpi-icon">功</span><div><small>设备总功率</small><strong><b id="kpiPower">--</b><em> W</em></strong><span id="kpiPowerMeta">双路INA226</span></div></article>
+        <article class="kpi"><span class="kpi-icon">仓</span><div><small>药品总件数</small><strong><b id="kpiQuantity">0</b><em> 件</em></strong><span id="kpiInventoryMeta">占用 0/32</span></div></article>
+        <article class="kpi"><span class="kpi-icon">AI</span><div><small>今日AI请求</small><strong id="kpiAi">0</strong><span id="kpiSuccess">成功率 100%</span></div></article>
+        <article class="kpi"><span class="kpi-icon">云</span><div><small>云服务运行时间</small><strong id="kpiUptime">0分</strong><span id="kpiLatency">平均延迟 0ms</span></div></article>
+      </div>
+
+      <div class="overview-grid">
+        <article class="panel topology-panel">
+          <div class="panel-heading"><div><span>01 · SYSTEM LINK</span><h2>端云协同链路</h2></div><b id="topologyState" class="badge">待机</b></div>
+          <div class="topology">
+            <div class="topo-node"><i>感</i><b>温度 / 功率</b><small>LM35 · INA226×2</small></div><span class="flow"></span>
+            <div class="topo-node"><i>核</i><b>RA6M5主控</b><small>控制与边缘采集</small></div><span class="flow"></span>
+            <div class="topo-node"><i>网</i><b>W800</b><small>TCP 10086</small></div><span class="flow"></span>
+            <div class="topo-node cloud"><i>云</i><b>华为云</b><small>监控 · AI · 仓储</small></div>
+          </div>
+        </article>
+        <article class="panel twin-panel">
+          <div class="panel-heading"><div><span>02 · DIGITAL TWIN</span><h2>主设备数字孪生</h2></div><b id="controlAck" class="badge">状态同步</b></div>
+          <div class="twin-content">
+            <div id="fridgeTwin" class="fridge-twin offline"><div class="twin-screen"><small>CORE TEMP</small><strong id="twinTemp">--.-°</strong></div><div class="twin-door"><span></span><i></i></div></div>
+            <dl><div><dt>循环风扇</dt><dd id="twinFan">关闭</dd></div><div><dt>制冷输出</dt><dd id="twinCool">停止</dd></div><div><dt>水冷循环</dt><dd id="twinWater">停止</dd></div><div><dt>网络RTT</dt><dd id="twinRtt">-- ms</dd></div><div class="wide"><dt>最新视觉识别</dt><dd id="twinVision">暂无记录</dd></div></dl>
+          </div>
+        </article>
+        <article class="panel alert-panel"><div class="panel-heading"><div><span>03 · ACTIVE ALERTS</span><h2>主动告警</h2></div><b id="alertCount" class="badge">0项</b></div><div id="alertsList" class="alerts-list"></div></article>
+        <article class="panel event-panel"><div class="panel-heading"><div><span>04 · LIVE EVENTS</span><h2>实时通信事件</h2></div><b class="live-badge">LIVE</b></div><div id="eventTimeline" class="event-timeline"></div></article>
+      </div>
+    </section>
+
+    <section class="route-page" data-page="monitor" hidden>
+      <div class="toolbar"><div><h2>全链路运行趋势</h2><p>温度、双路功率与网络质量统一时间轴</p></div><div id="rangeTabs" class="range-tabs"><button data-range="1h" class="active">1小时</button><button data-range="6h">6小时</button><button data-range="24h">24小时</button></div></div>
+      <div class="monitor-kpis"><div><span>实时温度</span><b id="monitorTemp">--℃</b></div><div><span>0x40功率</span><b id="monitorPower40">--W</b></div><div><span>0x41功率</span><b id="monitorPower41">--W</b></div><div><span>合计功率</span><b id="monitorPowerTotal">--W</b></div><div><span>网络RTT</span><b id="monitorRtt">--ms</b></div></div>
+      <div class="chart-grid">
+        <article class="panel chart-panel"><div class="panel-heading"><div><span>01 · TEMPERATURE</span><h2>温度变化曲线</h2></div><div class="legend"><i class="blue"></i>实际温度<i class="cyan"></i>设定温度<i class="temperature-offline"></i>离线重合</div></div><div class="chart-wrap"><canvas id="temperatureChart"></canvas><p id="temperatureEmpty">正在积累数据</p></div></article>
+        <article class="panel chart-panel"><div class="panel-heading"><div><span>02 · POWER</span><h2>功率变化曲线</h2></div><div class="legend"><i class="blue"></i>0x40<i class="purple"></i>0x41<i class="orange"></i>总功率</div></div><div class="chart-wrap"><canvas id="powerChart"></canvas><p id="powerEmpty">等待INA226遥测</p></div></article>
+        <article class="panel chart-panel wide-chart"><div class="panel-heading"><div><span>03 · NETWORK</span><h2>主设备网络状况</h2></div><div class="legend"><i class="blue"></i>RTT<i class="cyan"></i>心跳间隔<i class="offline"></i>离线区间</div></div><div class="chart-wrap"><canvas id="networkChart"></canvas><p id="networkEmpty">等待网络遥测</p></div></article>
+      </div>
+    </section>
+
+    <section class="route-page" data-page="inventory" hidden>
+      <div class="toolbar"><div><h2>32槽智慧药品仓储</h2><p>生产日期、保质期、临期状态与库存数量统一管理</p></div><div class="inventory-summary"><span><b id="inventoryQuantity">0</b>总件数</span><span><b id="inventoryOccupied">0</b>占用槽位</span><span class="warn"><b id="inventoryExpiring">0</b>临期</span><span class="danger"><b id="inventoryExpired">0</b>过期</span></div></div>
+      <article class="panel"><div class="inventory-tools"><label>搜索库存<input id="inventorySearch" type="search" placeholder="药品名称或药效"></label><div id="inventoryFilters" class="filter-tabs"><button data-filter="all" class="active">全部</button><button data-filter="normal">正常</button><button data-filter="expiring">临期</button><button data-filter="expired">过期</button><button data-filter="unknown">日期未知</button><button data-filter="empty">空槽</button></div></div><div id="inventoryGrid" class="inventory-grid"></div></article>
+    </section>
+
+    <section class="route-page" data-page="firmware" hidden>
+      <div class="firmware-hero"><div><span class="eyebrow">VERSION DELIVERY CENTER</span><h2>驱动与固件版本中心</h2><p>主控、串口屏和视觉模型分模块发布，所有下载文件均提供SHA-256校验。</p></div><a href="https://studio.edgeimpulse.com/" target="_blank" rel="noopener" class="edge-link"><span>EDGE IMPULSE</span><b>进入模型训练平台 ↗</b><small>上传图片 · 训练模型 · 导出部署包</small></a></div>
+      <div class="component-tabs" id="firmwareTabs"><button data-component="all" class="active">全部版本</button><button data-component="main">RA6M5主控</button><button data-component="hmi">TJC串口屏</button><button data-component="vision">视觉模型</button></div>
+      <div id="firmwareGrid" class="firmware-grid"><article class="panel empty-card">正在读取固件版本库</article></div>
+    </section>
+  </main>
+
+  <footer><span>FRIDGE CLOUD CONTROL CONSOLE</span><span>公开只读模式 · 不向浏览器下发Token或密钥</span><span id="footerStatus">云端待机</span></footer>
+  <script src="/dashboard.js?v=20260717-2" defer></script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>智慧药品冷藏系统 · 管理控制台</title>
+  <link rel="stylesheet" href="/admin.css?v=20260718-2">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <section id="authLoading" class="auth-loading" aria-live="polite">
+    <div class="auth-loading-card"><span class="auth-spinner" aria-hidden="true"></span><strong>正在验证管理会话</strong><small>连接云端安全控制台…</small></div>
+  </section>
+
+  <section id="loginView" class="login-view is-hidden">
+    <div class="login-orbit" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <form id="loginForm" class="login-card">
+      <div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></div>
+      <p class="eyebrow">FRIDGE CLOUD OPERATIONS</p>
+      <h1>智慧药品冷藏系统</h1>
+      <p class="login-subtitle">高级管理控制台</p>
+      <label class="field-label" for="adminPassword">管理员密码</label>
+      <div class="password-field">
+        <input id="adminPassword" name="password" type="password" minlength="10" autocomplete="current-password" required placeholder="请输入管理员密码">
+        <button id="passwordToggle" class="icon-button" type="button" aria-label="显示密码">显示</button>
+      </div>
+      <button id="loginButton" class="primary-button login-button" type="submit">安全登录</button>
+      <p id="loginError" class="form-error" role="alert"></p>
+      <a class="public-link" href="/">返回公开控制台</a>
+    </form>
+  </section>
+
+  <div id="adminApp" class="app-shell is-hidden">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark small" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div>
+          <p class="eyebrow">SMART MEDICINE COLD-CHAIN</p>
+          <h1>云端运营控制台</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div id="clock" class="clock">--:--:--</div>
+        <div id="onlinePill" class="status-pill offline"><span></span>设备离线</div>
+        <a class="ghost-button" href="/">公开大屏</a>
+        <button id="logoutButton" class="ghost-button danger-text" type="button">退出登录</button>
+      </div>
+    </header>
+
+    <nav id="adminNav" class="admin-nav" aria-label="管理员功能导航">
+      <a href="/admin/overview" data-admin-route="overview">运营总览</a>
+      <a href="/admin/devices" data-admin-route="devices">手机设备</a>
+      <a href="/admin/monitor" data-admin-route="monitor">运行监控</a>
+      <a href="/admin/inventory" data-admin-route="inventory">智慧仓储</a>
+      <a href="/admin/logs" data-admin-route="logs">日志告警</a>
+      <a href="/admin/firmware" data-admin-route="firmware">固件中心</a>
+      <a href="/admin/ai" data-admin-route="ai">AI助手</a>
+    </nav>
+
+    <main class="dashboard">
+      <section class="hero-strip" aria-label="关键指标" data-admin-page="overview">
+        <article class="metric-card accent-blue">
+          <span class="metric-label">设备链路</span>
+          <strong id="metricOnline">离线</strong>
+          <small id="metricHeartbeat">等待W800心跳</small>
+        </article>
+        <article class="metric-card accent-cyan">
+          <span class="metric-label">箱内温度</span>
+          <strong id="metricTemp">0.0℃</strong>
+          <small id="metricSetTemp">目标 --℃</small>
+        </article>
+        <article class="metric-card accent-violet">
+          <span class="metric-label">库存总量</span>
+          <strong id="metricQuantity">0 件</strong>
+          <small id="metricSlots">占用 0 / 32</small>
+        </article>
+        <article class="metric-card accent-green">
+          <span class="metric-label">今日AI服务</span>
+          <strong id="metricAi">0 次</strong>
+          <small id="metricSuccess">请求成功率 100%</small>
+        </article>
+        <article class="metric-card accent-orange">
+          <span class="metric-label">服务器运行</span>
+          <strong id="metricUptime">0秒</strong>
+          <small id="metricLatency">平均延迟 0ms</small>
+        </article>
+        <article class="metric-card accent-blue">
+          <span class="metric-label">手机客户端</span>
+          <strong id="metricClients">0 在线</strong>
+          <small id="metricClientsTotal">已登记 0 台</small>
+        </article>
+      </section>
+
+      <section class="layout-grid control-layout" data-admin-page="overview">
+        <article class="panel control-panel">
+          <div class="panel-heading">
+            <div><p class="section-index">01 / DEVICE COMMAND</p><h2>实时设备控制台</h2></div>
+            <span id="controlPending" class="tag neutral">状态同步</span>
+          </div>
+
+          <div class="actual-target">
+            <div><span>设备实际温度</span><strong id="actualTemperature">0.0℃</strong></div>
+            <div><span>服务器目标温度</span><strong id="targetTemperature">--℃</strong></div>
+          </div>
+
+          <div class="control-block">
+            <div class="control-title"><span>目标温度</span><small>-40℃ ～ 80℃</small></div>
+            <div class="temperature-control">
+              <button id="tempDown" class="step-button" type="button" aria-label="温度减一">−</button>
+              <input id="tempRange" type="range" min="-40" max="80" step="1" value="1">
+              <button id="tempUp" class="step-button" type="button" aria-label="温度加一">＋</button>
+              <label class="temp-number"><input id="tempInput" type="number" min="-40" max="80" step="1" value="1"><span>℃</span></label>
+            </div>
+          </div>
+
+          <div class="control-block">
+            <div class="control-title"><span>箱内循环风扇</span><small>点击立即下发</small></div>
+            <div id="fanControl" class="segmented">
+              <button type="button" data-fan="0">关闭</button>
+              <button type="button" data-fan="1">低风 · 50%</button>
+              <button type="button" data-fan="2">强风 · 100%</button>
+            </div>
+          </div>
+
+          <div class="switch-grid">
+            <label class="switch-card">
+              <span class="switch-icon snow">✦</span>
+              <span><strong>制冷片</strong><small id="coolState">设备状态：关闭</small></span>
+              <input id="coolSwitch" type="checkbox"><i></i>
+            </label>
+            <label class="switch-card">
+              <span class="switch-icon water">◉</span>
+              <span><strong>水冷循环</strong><small id="waterState">设备状态：关闭</small></span>
+              <input id="waterSwitch" type="checkbox"><i></i>
+            </label>
+          </div>
+
+          <button id="doorButton" class="door-button" type="button">
+            <span class="door-symbol">⌁</span>
+            <span><strong>发送一次性开门指令</strong><small>需弹窗确认 · 只表示命令已下发</small></span>
+            <b>OPEN</b>
+          </button>
+          <p id="controlHint" class="control-hint">设备离线时控制功能自动锁定。</p>
+        </article>
+
+        <article class="panel twin-panel">
+          <div class="panel-heading">
+            <div><p class="section-index">02 / DIGITAL TWIN</p><h2>冰箱数字孪生</h2></div>
+            <span id="twinPulse" class="live-dot">LIVE</span>
+          </div>
+          <div class="fridge-stage">
+            <div class="data-wave wave-one"></div><div class="data-wave wave-two"></div>
+            <div id="fridgeTwin" class="fridge-twin offline">
+              <div class="fridge-top">
+                <div class="screen"><span>CORE TEMP</span><strong id="twinTemp">0.0°</strong></div>
+                <div id="twinDoor" class="twin-door">
+                  <div class="shelf"><span></span><span></span><span></span></div>
+                  <div class="shelf"><span></span><span></span><span></span></div>
+                  <div class="shelf"><span></span><span></span><span></span></div>
+                  <i></i>
+                </div>
+              </div>
+              <div class="fridge-base"><span></span><span></span></div>
+            </div>
+            <div class="twin-orbit orbit-a"><span>RA6M5</span></div>
+            <div class="twin-orbit orbit-b"><span>W800</span></div>
+          </div>
+          <div class="twin-states">
+            <div><span>风扇</span><strong id="twinFan">关闭</strong></div>
+            <div><span>制冷</span><strong id="twinCool">关闭</strong></div>
+            <div><span>水冷</span><strong id="twinWater">关闭</strong></div>
+            <div><span>视觉识别</span><strong id="twinVision">暂无</strong></div>
+          </div>
+        </article>
+
+        <article class="panel command-panel">
+          <div class="panel-heading compact">
+            <div><p class="section-index">03 / COMMAND TRACE</p><h2>指令执行队列</h2></div>
+          </div>
+          <div id="commandState" class="command-state empty">
+            <span class="command-node"></span>
+            <div><strong>暂无控制指令</strong><p>发送控制后将在这里显示设备确认状态</p></div>
+          </div>
+          <div class="command-route">
+            <span>WEB</span><i></i><span>SERVER</span><i></i><span>W800</span><i></i><span>RA6M5</span>
+          </div>
+        </article>
+
+        <article class="panel recognition-panel">
+          <div class="panel-heading compact">
+            <div><p class="section-index">04 / VISION HISTORY</p><h2>最近药品识别</h2></div>
+            <span class="recognition-count">最近5种</span>
+          </div>
+          <div id="recognitionList" class="recognition-list">
+            <div class="recognition-empty">暂无药品识别记录</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="layout-grid analytics-layout" data-admin-page="monitor">
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <div><p class="section-index">04 / TELEMETRY</p><h2>温度运行曲线</h2></div>
+            <div id="rangeTabs" class="range-tabs"><button data-range="1h" class="active">1小时</button><button data-range="6h">6小时</button><button data-range="24h">24小时</button></div>
+          </div>
+          <div class="chart-legend"><span class="current-line">实际温度</span><span class="target-line">目标温度</span><span class="temperature-offline-line">离线重合</span></div>
+          <div class="canvas-wrap"><canvas id="temperatureChart"></canvas><p id="chartEmpty">暂无历史数据</p></div>
+        </article>
+        <article class="panel health-panel">
+          <div class="panel-heading compact"><div><p class="section-index">05 / SERVER HEALTH</p><h2>云端运行状态</h2></div></div>
+          <div class="gauge-grid">
+            <div class="gauge" id="cpuGauge"><div><strong id="cpuValue">0%</strong><span>CPU</span></div></div>
+            <div class="gauge" id="memoryGauge"><div><strong id="memoryValue">0%</strong><span>内存</span></div></div>
+          </div>
+          <dl class="server-list">
+            <div><dt>DeepSeek模型</dt><dd id="serverModel">--</dd></div>
+            <div><dt>进程内存</dt><dd id="processMemory">0 MB</dd></div>
+            <div><dt>设备通道</dt><dd id="serverPorts">--</dd></div>
+          </dl>
+          <div id="alertList" class="alert-list"></div>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="section-index">06 / POWER TELEMETRY</p><h2>双路功率变化</h2></div></div>
+          <div class="chart-legend"><span class="current-line">0x40功率</span><span class="target-line">0x41功率</span><span class="power-total-line">合计功率</span></div>
+          <div class="canvas-wrap"><canvas id="adminPowerChart"></canvas><p id="powerChartEmpty">暂无功率数据</p></div>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><p class="section-index">07 / NETWORK TELEMETRY</p><h2>主设备网络状况</h2></div></div>
+          <div class="chart-legend"><span class="current-line">网络RTT</span><span class="target-line">心跳间隔</span><span class="offline-line">红色背景为离线</span></div>
+          <div class="canvas-wrap"><canvas id="adminNetworkChart"></canvas><p id="networkChartEmpty">暂无网络数据</p></div>
+        </article>
+        <article class="panel health-panel power-settings-panel">
+          <div class="panel-heading compact"><div><p class="section-index">08 / POWER GUARD</p><h2>功率异常保护</h2></div></div>
+          <form id="powerSettingsForm" class="power-settings-form">
+            <label>绝对功率上限<input id="powerLimitInput" type="number" min="1" max="1000" step="1"><span>W</span></label>
+            <label>基线倍率<input id="powerMultiplierInput" type="number" min="1.05" max="5" step="0.05"></label>
+            <label>最小突增<input id="powerStepInput" type="number" min="0.1" max="1000" step="0.1"><span>W</span></label>
+            <button class="primary-button" type="submit">保存告警参数</button>
+          </form>
+          <div class="alert-filter"><span>告警记录</span><select id="powerAlertFilter"><option value="all">全部历史</option><option value="active">仅活动告警</option></select></div>
+          <div id="powerAlertList" class="alert-list"></div>
+        </article>
+      </section>
+
+      <section class="panel inventory-panel" data-admin-page="inventory">
+        <div class="panel-heading inventory-heading">
+          <div><p class="section-index">06 / MEDICINE INVENTORY</p><h2>32槽智慧仓储管理</h2></div>
+          <div class="inventory-stats">
+            <span><b id="inventoryTotal">0</b> 总件数</span>
+            <span><b id="inventoryOccupied">0</b> 占用槽位</span>
+            <span class="warning"><b id="inventoryExpiring">0</b> 临期</span>
+            <span class="danger"><b id="inventoryExpired">0</b> 过期</span>
+          </div>
+        </div>
+        <div class="inventory-toolbar">
+          <label class="search-box"><span>⌕</span><input id="inventorySearch" type="search" placeholder="搜索药品名称或药效"></label>
+          <div id="inventoryFilters" class="filter-tabs">
+            <button class="active" data-filter="all">全部</button><button data-filter="normal">正常</button><button data-filter="expiring">临期</button><button data-filter="expired">过期</button><button data-filter="empty">空槽</button><button data-filter="unknown">日期未知</button>
+          </div>
+        </div>
+        <div id="inventoryGrid" class="inventory-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="layout-grid assistant-layout" data-admin-page="ai">
+        <article class="panel ai-panel">
+          <div class="panel-heading"><div><p class="section-index">07 / AI COPILOT</p><h2>AI健康助手实验台</h2></div><span class="ai-badge">DEEPSEEK</span></div>
+          <form id="healthForm" class="ai-form">
+            <label for="symptomInput">输入症状描述</label>
+            <textarea id="symptomInput" maxlength="159" required placeholder="例如：头疼、发热、四肢乏力……"></textarea>
+            <div><small><span id="symptomCount">0</span> / 159</small><button id="healthSubmit" class="primary-button" type="submit">启动智能初筛</button></div>
+          </form>
+          <div id="aiResult" class="ai-result empty">
+            <div><span>初步诊断</span><strong id="diagnosisResult">等待输入</strong></div>
+            <i>→</i>
+            <div><span>库存校验与推荐</span><strong id="medicineResult">暂无结果</strong></div>
+            <small id="aiLatency">-- ms</small>
+          </div>
+          <div id="healthHistory" class="health-history"></div>
+        </article>
+      </section>
+
+      <section class="layout-grid assistant-layout" data-admin-page="logs">
+        <article class="panel audit-panel">
+          <div class="panel-heading"><div><p class="section-index">08 / AUDIT LOG</p><h2>操作审计时间线</h2></div><button id="refreshAudit" class="mini-button" type="button">刷新</button></div>
+          <div id="auditTimeline" class="audit-timeline"></div>
+        </article>
+        <article class="panel log-panel">
+          <div class="panel-heading"><div><p class="section-index">09 / SERVER LOG</p><h2>服务器结构化日志</h2></div><button id="refreshLogs" class="mini-button" type="button">刷新</button></div>
+          <div class="log-toolbar"><select id="logLevel"><option value="">全部级别</option><option>INFO</option><option>WARNING</option><option>ERROR</option></select><input id="logQuery" type="search" placeholder="搜索日志内容"></div>
+          <div id="serverLogList" class="server-log-list"></div>
+        </article>
+      </section>
+
+      <section class="panel client-panel" data-admin-page="devices">
+        <div class="panel-heading inventory-heading"><div><p class="section-index">10 / MOBILE CLIENTS</p><h2>手机客户端接入管理</h2></div><div class="inventory-stats"><span><b id="clientOnlineCount">0</b> 在线</span><span><b id="clientRegisteredCount">0</b> 已登记</span><span class="danger"><b id="clientDisabledCount">0</b> 已停用</span></div></div>
+        <form id="clientCreateForm" class="client-create-form"><label>设备名称<input id="clientName" maxlength="48" required placeholder="例如：药房值班手机"></label><label>备注<input id="clientNotes" maxlength="160" placeholder="使用人或用途"></label><button class="primary-button" type="submit">生成独立Token</button></form>
+        <div class="client-help">生成后Token只显示一次。请在对应手机App的“服务器设置 → Token”中填写。</div>
+        <div id="clientGrid" class="client-grid"></div>
+      </section>
+
+      <section class="panel firmware-admin-panel" data-admin-page="firmware">
+        <div class="panel-heading inventory-heading"><div><p class="section-index">11 / FIRMWARE DELIVERY</p><h2>固件与驱动版本库</h2></div><a class="mini-button edge-admin-link" href="https://studio.edgeimpulse.com/" target="_blank" rel="noopener">Edge Impulse ↗</a></div>
+        <div class="ota-console">
+          <section>
+            <div class="ota-section-head"><div><b>RA6M5 OTA设备</b><small>MCUboot · Dual Bank · SCE9</small></div><span id="otaRefreshState">等待设备上报</span></div>
+            <div id="otaDeviceGrid" class="ota-device-grid"><p class="control-hint">设备第一次发送FW1 CHECK后会显示在这里。</p></div>
+          </section>
+          <section>
+            <div class="ota-section-head"><div><b>部署任务</b><small>升级开始后不可从网页取消</small></div></div>
+            <div id="otaDeploymentGrid" class="ota-deployment-grid"><p class="control-hint">暂无OTA部署任务。</p></div>
+          </section>
+        </div>
+        <form id="releaseCreateForm" class="release-create-form"><label>模块<select id="releaseComponent"><option value="main">RA6M5主控</option><option value="hmi">TJC串口屏</option><option value="vision">视觉模型</option></select></label><label>版本号<input id="releaseVersion" required placeholder="v2026.07.17"></label><label>标题<input id="releaseTitle" required placeholder="正式版本"></label><label>通道<select id="releaseChannel"><option value="stable">正式</option><option value="beta">测试</option><option value="legacy">历史</option></select></label><label class="wide">更新说明<textarea id="releaseChangelog" maxlength="1000"></textarea></label><label class="check"><input id="releasePublished" type="checkbox">立即发布</label><label class="check"><input id="releaseCurrent" type="checkbox">设为当前版本</label><button class="primary-button" type="submit">创建版本</button></form>
+        <div id="adminFirmwareGrid" class="admin-firmware-grid"></div>
+      </section>
+    </main>
+    <footer><span>SMART MEDICINE CABINET · CLOUD CONTROL</span><span id="footerUpdate">等待数据同步</span></footer>
+  </div>
+
+  <dialog id="medicineDialog" class="modal">
+    <form id="medicineForm" method="dialog">
+      <div class="modal-heading"><div><p class="section-index">INVENTORY EDITOR</p><h2 id="medicineDialogTitle">编辑槽位</h2></div><button id="medicineClose" class="modal-close" type="button" aria-label="关闭">×</button></div>
+      <input id="medicineSlot" type="hidden">
+      <div class="form-grid">
+        <label class="wide">药品名称<input id="medicineName" maxlength="47" required></label>
+        <label>生产日期<input id="medicineDate" maxlength="15" placeholder="2026-07-16"></label>
+        <label>保质期<input id="medicineShelf" maxlength="23" placeholder="12个月"></label>
+        <label>当前数量<input id="medicineQuantity" type="number" min="1" max="999" value="1" required></label>
+        <label class="wide">主要药效<textarea id="medicineEfficacy" maxlength="159" placeholder="请输入适用症状或药效说明"></textarea></label>
+      </div>
+      <div id="quantityActions" class="quantity-actions">
+        <span>快捷数量操作</span>
+        <button type="button" data-operation="restock" data-value="1">补药 +1</button>
+        <button type="button" data-operation="take" data-value="1">取药 −1</button>
+        <button id="quantitySet" type="button">设为输入数量</button>
+      </div>
+      <p id="medicineError" class="form-error"></p>
+      <div class="modal-actions"><button id="deleteMedicine" class="danger-button" type="button">清空槽位</button><span></span><button id="medicineCancel" class="ghost-button" type="button">取消</button><button id="saveMedicine" class="primary-button" type="submit" value="default">保存资料</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="confirmDialog" class="modal confirm-modal">
+    <form method="dialog">
+      <div class="confirm-symbol">!</div><h2 id="confirmTitle">确认操作</h2><p id="confirmMessage"></p>
+      <div class="modal-actions centered"><button class="ghost-button" value="cancel">取消</button><button id="confirmAccept" class="primary-button" value="confirm">确认执行</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="tokenDialog" class="modal confirm-modal">
+    <form method="dialog"><div class="confirm-symbol">✓</div><h2>手机客户端Token已生成</h2><p>该Token只显示这一次，请立即复制到对应手机App。</p><output id="generatedToken" class="generated-token"></output><div class="modal-actions centered"><button id="copyToken" class="primary-button" value="copy" type="button">复制Token</button><button class="ghost-button" value="close">已保存并关闭</button></div></form>
+  </dialog>
+
+  <dialog id="powerAlertDialog" class="modal confirm-modal alert-modal">
+    <form method="dialog"><div class="confirm-symbol danger-symbol">!</div><h2>检测到制冷功率异常</h2><p id="powerAlertMessage">请立即检查制冷片、供电和散热系统。</p><div class="modal-actions centered"><button id="ackPowerAlert" class="primary-button" value="ack" type="button">确认并记录</button></div></form>
+  </dialog>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script src="/admin.js?v=20260718-2" defer></script>
+</body>
+</html>

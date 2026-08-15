@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "generated_from": "D:\\Desktop\\fridge _codex",
+  "releases": [
+    {
+      "component": "main",
+      "version": "v2026.07.17",
+      "title": "当前主控程序",
+      "changelog": "RA6M5主控安装固件与精简源码归档。",
+      "channel": "stable",
+      "published": true,
+      "is_current": true,
+      "artifacts": [
+        {
+          "kind": "install",
+          "file": "main-v2026.07.17.srec",
+          "filename": "fridge-main-v2026.07.17.srec",
+          "size_bytes": 104314,
+          "sha256": "820e69cc9a8ea5f2ece8ebc874ed3d1026884853ba0e60b9feabf22c72679719"
+        },
+        {
+          "kind": "source",
+          "file": "main-v2026.07.17-source.zip",
+          "filename": "fridge-main-v2026.07.17-source.zip",
+          "size_bytes": 77398,
+          "sha256": "8b14ee52d757d129e06be177922ba07636657894a3c8e8f5f979dfe8ea7af31f"
+        }
+      ]
+    },
+    {
+      "component": "main",
+      "version": "v2026.07.16",
+      "title": "历史主控程序 · 备份4",
+      "changelog": "历史可回退版本归档。",
+      "channel": "legacy",
+      "published": true,
+      "is_current": false,
+      "artifacts": [
+        {
+          "kind": "install",
+          "file": "main-v2026.07.16.srec",
+          "filename": "fridge-main-v2026.07.16.srec",
+          "size_bytes": 95514,
+          "sha256": "9376ee6ce080c1b6fdead0d21520ba031457afaf7665f542a79ccc7be1ac81d3"
+        },
+        {
+          "kind": "source",
+          "file": "main-v2026.07.16-source.zip",
+          "filename": "fridge-main-v2026.07.16-source.zip",
+          "size_bytes": 72857,
+          "sha256": "62814425194c1c4731b193522b07e537ad7ad9a2285b30f3964c71d05bf8b02d"
+        }
+      ]
+    },
+    {
+      "component": "main",
+      "version": "v2026.07.08",
+      "title": "历史主控程序 · 备份3",
+      "changelog": "历史可回退版本归档。",
+      "channel": "legacy",
+      "published": true,
+      "is_current": false,
+      "artifacts": [
+        {
+          "kind": "install",
+          "file": "main-v2026.07.08.srec",
+          "filename": "fridge-main-v2026.07.08.srec",
+          "size_bytes": 89562,
+          "sha256": "c308db7a01dd7e9c9375482bb43ca2c2e0f4d30d93754205ad126544509c107d"
+        },
+        {
+          "kind": "source",
+          "file": "main-v2026.07.08-source.zip",
+          "filename": "fridge-main-v2026.07.08-source.zip",
+          "size_bytes": 69358,
+          "sha256": "097c5ed4ab0c05677bb07ece4c13d81fb1cff642c34345a110288961be3b47da"
+        }
+      ]
+    },
+    {
+      "component": "main",
+      "version": "v2026.07.06",
+      "title": "历史主控程序 · 备份2",
+      "changelog": "历史可回退版本归档。",
+      "channel": "legacy",
+      "published": true,
+      "is_current": false,
+      "artifacts": [
+        {
+          "kind": "install",
+          "file": "main-v2026.07.06.srec",
+          "filename": "fridge-main-v2026.07.06.srec",
+          "size_bytes": 93498,
+          "sha256": "c926ccfe341c95d53c90a5324a3d37ade019fab84bf5bad7d107f4b6f6e694e9"
+        },
+        {
+          "kind": "source",
+          "file": "main-v2026.07.06-source.zip",
+          "filename": "fridge-main-v2026.07.06-source.zip",
+          "size_bytes": 70149,
+          "sha256": "fc75989b5537f53b6ad714820ef58ff174d392e265f2e27b8c82788196feafdc"
+        }
+      ]
+    },
+    {
+      "component": "main",
+      "version": "v2026.07.05",
+      "title": "历史主控程序 · 备份1",
+      "changelog": "历史可回退版本归档。",
+      "channel": "legacy",
+      "published": true,
+      "is_current": false,
+      "artifacts": [
+        {
+          "kind": "install",
+          "file": "main-v2026.07.05.srec",
+          "filename": "fridge-main-v2026.07.05.srec",
+          "size_bytes": 88098,
+          "sha256": "0aefcd3bd893993093746e390fc7d74752e05d0d4ed6bf6b6e82e04ad05c17ee"
+        },
+        {
+          "kind": "source",
+          "file": "main-v2026.07.05-source.zip",
+          "filename": "fridge-main-v2026.07.05-source.zip",
+          "size_bytes": 68045,
+          "sha256": "ad77a412542171a1cb590bb7457a0b511b1cf3257db10a5277808864f44140d3"
+        }
+      ]
+    },
+    {
+      "component": "hmi",
+      "version": "v2026.05.14",
+      "title": "当前TJC串口屏程序",
+      "changelog": "当前串口屏HMI工程，可用于二次编辑和下载。",
+      "channel": "stable",
+      "published": true,
+      "is_current": true,
+      "artifacts": [
+        {
+          "kind": "project",
+          "file": "hmi-v2026.05.14.hmi",
+          "filename": "fridge-screen-v2026.05.14.HMI",
+          "size_bytes": 16155117,
+          "sha256": "386b30118e7673ce6478c4b6714ecf9f5463a82e189a03f8a30e3884d61d1097"
+        }
+      ]
+    }
+  ]
+}

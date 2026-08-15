@@ -1,0 +1,4 @@
+openai>=1.0.0
+psutil>=5.9.0
+websockets==15.0.1
+cryptography>=42,<47
